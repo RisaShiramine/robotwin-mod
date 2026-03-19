@@ -14,7 +14,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--episode-instruction-map", default=None, help="JSON mapping episode ids to the instruction string or a richer metadata dict used in that episode.")
     parser.add_argument("--instruction-dir", default=None, help="Directory containing episode{idx}.json instruction files.")
     parser.add_argument("--instruction-source", default="seen_first", choices=["seen", "unseen", "seen_first", "unseen_first"], help="How to choose an instruction when reading per-episode instruction files.")
-    parser.add_argument("--episode-lengths-json", default=None, help="JSON file mapping episode ids to transition lengths.")
+    parser.add_argument("--episode-lengths-json", default=None, help="JSON file mapping episode ids to transition lengths. Missing episodes can be filled from --dp3-zarr.")
+    parser.add_argument("--dp3-zarr", default=None, help="Optional DP3 zarr path used to infer episode lengths from meta/episode_ends.")
     parser.add_argument("--stage-boundaries-json", default=None, help="Optional JSON file mapping episode ids to explicit stage ranges.")
     parser.add_argument("--summary-output", default=None, help="Optional summary JSON path.")
     parser.add_argument("--disable-stage-normalization", action="store_true", help="Use decomposition stages as-is without stack-stage normalization.")
@@ -110,6 +111,32 @@ def load_episode_lengths(path: str) -> Dict[int, int]:
         return {idx: int(length) for idx, length in enumerate(payload)}
     return {int(k): int(v) for k, v in payload.items()}
 
+
+
+
+def load_episode_lengths_from_zarr(zarr_path: str) -> Dict[int, int]:
+    try:
+        import zarr
+    except ModuleNotFoundError as exc:
+        raise ModuleNotFoundError(
+            "zarr is required to infer episode lengths from --dp3-zarr. Install it or provide --episode-lengths-json."
+        ) from exc
+
+    root = zarr.open(str(Path(zarr_path).expanduser()), mode="r")
+    episode_ends = root["meta"]["episode_ends"][:]
+    lengths: Dict[int, int] = {}
+    previous_end = 0
+    for episode_id, end in enumerate(episode_ends):
+        end = int(end)
+        lengths[episode_id] = end - previous_end
+        previous_end = end
+    return lengths
+
+
+def merge_episode_lengths(explicit_lengths: Dict[int, int], zarr_lengths: Dict[int, int]) -> Dict[int, int]:
+    merged = dict(zarr_lengths)
+    merged.update(explicit_lengths)
+    return merged
 
 def load_stage_boundaries(path: str) -> Dict[int, List[Dict[str, int]]]:
     payload = json.loads(Path(path).read_text(encoding="utf-8"))
@@ -221,7 +248,7 @@ def topologically_order_stack_stages(stack_stages: List[Dict[str, Any]]) -> List
 def normalize_decomposition_row(row: Dict[str, Any]) -> Dict[str, Any]:
     decomposition = row["decomposition"]
     stages = decomposition.get("stages", [])
-    if decomposition.get("task_category") != "stack" or len(stages) <= 1:
+    if len(stages) <= 1:
         return row
 
     stack_stages = [stage for stage in stages if infer_support_object(stage) is not None]
@@ -370,9 +397,11 @@ def main() -> None:
     else:
         raise ValueError("Either --episode-instruction-map or --instruction-dir must be provided.")
 
-    if not args.episode_lengths_json:
-        raise ValueError("--episode-lengths-json is currently required.")
-    episode_lengths = load_episode_lengths(args.episode_lengths_json)
+    explicit_episode_lengths = load_episode_lengths(args.episode_lengths_json) if args.episode_lengths_json else {}
+    zarr_episode_lengths = load_episode_lengths_from_zarr(args.dp3_zarr) if args.dp3_zarr else {}
+    episode_lengths = merge_episode_lengths(explicit_episode_lengths, zarr_episode_lengths)
+    if not episode_lengths:
+        raise ValueError("Provide --episode-lengths-json, --dp3-zarr, or both.")
     stage_boundaries = load_stage_boundaries(args.stage_boundaries_json) if args.stage_boundaries_json else {}
 
     output_path = Path(args.output)
@@ -428,6 +457,10 @@ def main() -> None:
         "instruction_source": args.instruction_source if args.instruction_dir else "episode_instruction_map",
         "alignment_mode": "explicit_stage_boundaries" if stage_boundaries else "uniform_partition",
         "stage_normalization": not args.disable_stage_normalization,
+        "episode_lengths_source": {
+            "json": bool(args.episode_lengths_json),
+            "dp3_zarr": bool(args.dp3_zarr),
+        },
     }
 
     if args.summary_output:
