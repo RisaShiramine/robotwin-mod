@@ -32,6 +32,7 @@ from dp3_policy import *
 from diffusion_policy_3d.dataset.robot_dataset import inspect_planner_tokens
 
 
+def encode_obs(observation):  # Post-Process Observation
 def encode_obs(observation, planner_tokens=None):  # Post-Process Observation
     obs = dict()
     obs['agent_pos'] = observation['joint_action']['vector']
@@ -49,6 +50,26 @@ def encode_obs(observation, planner_tokens=None):  # Post-Process Observation
 
 
 
+
+
+
+def resolve_eval_zarr_path(cfg, usr_args):
+    setting = usr_args.get("ckpt_setting") or usr_args.get("task_config") or cfg.get("setting", None)
+    expert_data_num = usr_args.get("expert_data_num", cfg.get("expert_data_num", None))
+    task_name = usr_args.get("task_name") or cfg.get("task_name", None)
+    if task_name is None or setting is None or expert_data_num is None:
+        return None
+    return f"../../../data/{task_name}-{setting}-{expert_data_num}.zarr"
+
+
+def maybe_inspect_eval_planner_tokens(cfg, usr_args):
+    zarr_path = resolve_eval_zarr_path(cfg, usr_args)
+    if not zarr_path:
+        return False, {}
+    try:
+        return inspect_planner_tokens(zarr_path)
+    except Exception:
+        return False, {}
 
 def resolve_ckpt_path(cfg, usr_args):
     if not cfg.policy.use_pc_color:
@@ -111,8 +132,9 @@ def get_model(usr_args):
     cfg.task_name = usr_args["task_name"]
     cfg.expert_data_num = usr_args["expert_data_num"]
     cfg.raw_task_name = usr_args["task_name"]
+    cfg.setting = usr_args.get("ckpt_setting", cfg.get("setting", None))
     cfg.policy.use_pc_color = usr_args['use_rgb']
-    has_planner_tokens, vocab_sizes = inspect_planner_tokens(cfg.task.dataset.zarr_path)
+    has_planner_tokens, vocab_sizes = maybe_inspect_eval_planner_tokens(cfg, usr_args)
     cfg.policy.use_planner_tokens = bool(has_planner_tokens)
     if has_planner_tokens and vocab_sizes:
         cfg.policy.planner_vocab_sizes = vocab_sizes
@@ -124,6 +146,7 @@ def get_model(usr_args):
 
 
 def eval(TASK_ENV, model, observation):
+    obs = encode_obs(observation)  # Post-Process Observation
     planner_tokens = None
     if hasattr(model, "env_runner") and getattr(model.env_runner, "planner_controller", None) is not None:
         planner_tokens = model.env_runner.planner_controller.current_tokens()
@@ -140,6 +163,7 @@ def eval(TASK_ENV, model, observation):
     for action in actions:  # Execute each step of the action
         TASK_ENV.take_action(action)
         observation = TASK_ENV.get_obs()
+        obs = encode_obs(observation)
         planner_tokens = None
         if hasattr(model, "env_runner") and getattr(model.env_runner, "planner_controller", None) is not None:
             next_obs = encode_obs(observation)
