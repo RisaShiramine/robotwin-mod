@@ -233,7 +233,17 @@ class DP3(BasePolicy):
         result: must include "action" key
         """
         # normalize input
-        nobs = self.normalizer.normalize(obs_dict)
+        planner_token_batch = {
+            key: obs_dict[key]
+            for key in ("stage_id", "source_id", "target_id")
+            if key in obs_dict
+        }
+        obs_only_dict = {
+            key: value
+            for key, value in obs_dict.items()
+            if key not in planner_token_batch
+        }
+        nobs = self.normalizer.normalize(obs_only_dict)
         # this_n_point_cloud = nobs['imagin_robot'][..., :3] # only use coordinate
         if not self.use_pc_color:
             nobs["point_cloud"] = nobs["point_cloud"][..., :3]
