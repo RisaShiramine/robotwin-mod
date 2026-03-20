@@ -45,6 +45,9 @@ class DP3(BasePolicy):
         use_pc_color=False,
         pointnet_type="pointnet",
         pointcloud_encoder_cfg=None,
+        use_planner_tokens=False,
+        planner_embed_dim=16,
+        planner_vocab_sizes=None,
         # parameters passed to step
         **kwargs,
     ):
@@ -78,12 +81,22 @@ class DP3(BasePolicy):
         obs_feature_dim = obs_encoder.output_shape()
         input_dim = action_dim + obs_feature_dim
         global_cond_dim = None
+        self.use_planner_tokens = use_planner_tokens
+        self.planner_embed_dim = planner_embed_dim
+        planner_vocab_sizes = planner_vocab_sizes or {}
+        self.stage_vocab_size = int(planner_vocab_sizes.get("stage", 32))
+        self.object_vocab_size = int(planner_vocab_sizes.get("object", 64))
+        self.planner_cond_dim = planner_embed_dim * 3 if use_planner_tokens else 0
         if obs_as_global_cond:
             input_dim = action_dim
             if "cross_attention" in self.condition_type:
-                global_cond_dim = obs_feature_dim
+                global_cond_dim = obs_feature_dim + self.planner_cond_dim
             else:
-                global_cond_dim = obs_feature_dim * n_obs_steps
+                global_cond_dim = obs_feature_dim * n_obs_steps + self.planner_cond_dim
+
+        if self.use_planner_tokens:
+            self.stage_emb = nn.Embedding(num_embeddings=self.stage_vocab_size, embedding_dim=planner_embed_dim)
+            self.obj_emb = nn.Embedding(num_embeddings=self.object_vocab_size, embedding_dim=planner_embed_dim)
 
         self.use_pc_color = use_pc_color
         self.pointnet_type = pointnet_type
@@ -137,6 +150,34 @@ class DP3(BasePolicy):
         self.num_inference_steps = num_inference_steps
 
         print_params(self)
+
+    def _planner_token_features(self, token_batch, batch_size, device):
+        if not self.use_planner_tokens:
+            return None
+
+        stage_id = token_batch.get("stage_id")
+        source_id = token_batch.get("source_id")
+        target_id = token_batch.get("target_id")
+
+        if stage_id is None:
+            stage_id = torch.zeros(batch_size, dtype=torch.long, device=device)
+        else:
+            stage_id = stage_id.to(device=device, dtype=torch.long).reshape(batch_size)
+
+        if source_id is None:
+            source_id = torch.zeros(batch_size, dtype=torch.long, device=device)
+        else:
+            source_id = source_id.to(device=device, dtype=torch.long).reshape(batch_size)
+
+        if target_id is None:
+            target_id = torch.zeros(batch_size, dtype=torch.long, device=device)
+        else:
+            target_id = target_id.to(device=device, dtype=torch.long).reshape(batch_size)
+
+        st_feat = self.stage_emb(stage_id)
+        src_feat = self.obj_emb(source_id)
+        tgt_feat = self.obj_emb(target_id)
+        return torch.cat([st_feat, src_feat, tgt_feat], dim=-1)
 
     # ========= inference  ============
     def conditional_sample(
@@ -222,6 +263,9 @@ class DP3(BasePolicy):
             else:
                 # reshape back to B, Do
                 global_cond = nobs_features.reshape(B, -1)
+            planner_cond = self._planner_token_features(obs_dict, batch_size=B, device=device)
+            if planner_cond is not None:
+                global_cond = torch.cat([global_cond, planner_cond], dim=-1)
             # empty data for action
             cond_data = torch.zeros(size=(B, T, Da), device=device, dtype=dtype)
             cond_mask = torch.zeros_like(cond_data, dtype=torch.bool)
@@ -295,6 +339,9 @@ class DP3(BasePolicy):
             else:
                 # reshape back to B, Do
                 global_cond = nobs_features.reshape(batch_size, -1)
+            planner_cond = self._planner_token_features(batch, batch_size=batch_size, device=trajectory.device)
+            if planner_cond is not None:
+                global_cond = torch.cat([global_cond, planner_cond], dim=-1)
             # this_n_point_cloud = this_nobs['imagin_robot'].reshape(batch_size,-1, *this_nobs['imagin_robot'].shape[1:])
             this_n_point_cloud = this_nobs["point_cloud"].reshape(batch_size, -1, *this_nobs["point_cloud"].shape[1:])
             this_n_point_cloud = this_n_point_cloud[..., :3]

@@ -34,6 +34,10 @@ class DP3:
     def update_obs(self, observation):
         self.env_runner.update_obs(observation)
 
+    def set_planner_controller(self, planner_controller):
+        if hasattr(self.env_runner, "set_planner_controller"):
+            self.env_runner.set_planner_controller(planner_controller)
+
     def get_action(self, observation=None):
         action = self.env_runner.get_action(self.policy, observation)
         return action

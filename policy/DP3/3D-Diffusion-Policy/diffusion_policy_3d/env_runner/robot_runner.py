@@ -43,6 +43,10 @@ class RobotRunner(BaseRunner):
         self.logger_util_test10 = logger_util.LargestKRecorder(K=5)
         self.obs = deque(maxlen=n_obs_steps + 1)
         self.env = None
+        self.planner_controller = None
+
+    def set_planner_controller(self, planner_controller):
+        self.planner_controller = planner_controller
 
     def stack_last_n_obs(self, all_obs, n_steps):
         assert len(all_obs) > 0
@@ -95,6 +99,12 @@ class RobotRunner(BaseRunner):
             obs_dict_input = {}  # flush unused keys
             obs_dict_input["point_cloud"] = obs_dict["point_cloud"].unsqueeze(0)
             obs_dict_input["agent_pos"] = obs_dict["agent_pos"].unsqueeze(0)
+            if self.planner_controller is not None:
+                self.planner_controller.maybe_advance(np_obs_dict)
+                planner_tokens = self.planner_controller.current_tokens()
+                obs_dict_input["stage_id"] = torch.tensor([planner_tokens["stage_id"]], device=device, dtype=torch.long)
+                obs_dict_input["source_id"] = torch.tensor([planner_tokens["source_id"]], device=device, dtype=torch.long)
+                obs_dict_input["target_id"] = torch.tensor([planner_tokens["target_id"]], device=device, dtype=torch.long)
 
             action_dict = policy.predict_action(obs_dict_input)
 

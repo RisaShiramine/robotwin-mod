@@ -56,6 +56,11 @@ policy:
 
   use_pc_color: false
   pointnet_type: "pointnet"
+  use_planner_tokens: false
+  planner_embed_dim: 16
+  planner_vocab_sizes:
+    stage: 32
+    object: 64
 
 
   pointcloud_encoder_cfg:
