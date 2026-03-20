@@ -18,6 +18,7 @@ import yaml
 from datetime import datetime
 import importlib
 import dill
+import json
 
 from hydra import initialize, compose
 from omegaconf import OmegaConf
@@ -30,6 +31,9 @@ sys.path.append(os.path.join(parent_directory, '3D-Diffusion-Policy'))
 
 from dp3_policy import *
 from diffusion_policy_3d.dataset.robot_dataset import inspect_planner_tokens
+from diffusion_policy_3d.env_runner.planner_controller import PlannerTokenStateMachine
+
+
 def encode_obs(observation, planner_tokens=None):  # Post-Process Observation
     obs = dict()
     obs['agent_pos'] = observation['joint_action']['vector']
@@ -49,6 +53,61 @@ def encode_obs(observation, planner_tokens=None):  # Post-Process Observation
 
 
 
+
+
+
+def normalize_instruction_key(text):
+    if text is None:
+        return None
+    return " ".join(str(text).strip().lower().split())
+
+
+def load_planner_stages_from_decomposition(path, instruction):
+    if not path or not instruction:
+        return None
+
+    with open(path, "r", encoding="utf-8") as f:
+        payload = json.load(f)
+
+    target = normalize_instruction_key(instruction)
+    records = []
+    if isinstance(payload, dict):
+        for value in payload.values():
+            if isinstance(value, list):
+                records.extend(value)
+    elif isinstance(payload, list):
+        records = payload
+
+    for record in records:
+        record_instruction = record.get("instruction")
+        decomposition = record.get("decomposition", {})
+        decomposition_instruction = decomposition.get("instruction")
+        if target in {normalize_instruction_key(record_instruction), normalize_instruction_key(decomposition_instruction)}:
+            stages = decomposition.get("stages", [])
+            return stages if stages else None
+    return None
+
+
+def maybe_init_planner_controller(TASK_ENV, model):
+    if getattr(model.env_runner, "planner_controller", None) is not None:
+        return
+
+    runtime_cfg = getattr(model, "planner_runtime", None)
+    if not runtime_cfg:
+        return
+
+    vocab_path = runtime_cfg.get("planner_vocab_path")
+    decomposition_path = runtime_cfg.get("planner_decomposition_path")
+    if not vocab_path or not decomposition_path:
+        return
+
+    instruction = TASK_ENV.get_instruction()
+    stages = load_planner_stages_from_decomposition(decomposition_path, instruction)
+    if not stages:
+        return
+
+    controller = PlannerTokenStateMachine(vocab_path=vocab_path, stages=stages)
+    model.set_planner_controller(controller)
 
 def resolve_eval_zarr_path(cfg, usr_args):
     setting = usr_args.get("ckpt_setting") or usr_args.get("task_config") or cfg.get("setting", None)
@@ -139,11 +198,15 @@ def get_model(usr_args):
     OmegaConf.set_struct(cfg, True)
 
     DP3_Model = DP3(cfg, usr_args)
+    DP3_Model.planner_runtime = {
+        "planner_vocab_path": usr_args.get("planner_vocab_path"),
+        "planner_decomposition_path": usr_args.get("planner_decomposition_path"),
+    }
     return DP3_Model
 
 
 def eval(TASK_ENV, model, observation):
-    obs = encode_obs(observation)  # Post-Process Observation
+    maybe_init_planner_controller(TASK_ENV, model)
     planner_tokens = None
     if hasattr(model, "env_runner") and getattr(model.env_runner, "planner_controller", None) is not None:
         planner_tokens = model.env_runner.planner_controller.current_tokens()
@@ -160,7 +223,6 @@ def eval(TASK_ENV, model, observation):
     for action in actions:  # Execute each step of the action
         TASK_ENV.take_action(action)
         observation = TASK_ENV.get_obs()
-        obs = encode_obs(observation)
         planner_tokens = None
         if hasattr(model, "env_runner") and getattr(model.env_runner, "planner_controller", None) is not None:
             next_obs = encode_obs(observation)
