@@ -56,6 +56,111 @@ def encode_obs(observation, planner_tokens=None):  # Post-Process Observation
 
 
 
+
+
+def normalize_object_key(text):
+    if text is None:
+        return None
+    return normalize_instruction_key(text).replace("_", " ")
+
+
+def is_stack_blocks_task(task_env):
+    task_name = task_env.__class__.__name__.lower()
+    return "stack" in task_name and "block" in task_name
+
+
+def get_stack_center_xy(task_env):
+    if hasattr(task_env, "block1_target_pose") and len(task_env.block1_target_pose) >= 2:
+        return np.array(task_env.block1_target_pose[:2], dtype=np.float32)
+    return np.array([0.0, -0.13], dtype=np.float32)
+
+
+def all_grippers_open(task_env):
+    left_open = task_env.is_left_gripper_open() if hasattr(task_env, "is_left_gripper_open") else True
+    right_open = task_env.is_right_gripper_open() if hasattr(task_env, "is_right_gripper_open") else True
+    return bool(left_open and right_open)
+
+
+def resolve_block_actor(task_env, object_name):
+    key = normalize_object_key(object_name)
+    if key is None:
+        return None
+    key = key.replace(" block", "")
+    direct_attr = key.replace(" ", "_") + "_block"
+    if hasattr(task_env, direct_attr):
+        return getattr(task_env, direct_attr)
+
+    if hasattr(task_env, "blocks") and hasattr(task_env, "block_color_names"):
+        color_names = [normalize_object_key(name) for name in task_env.block_color_names]
+        lookup_key = f"{key} block" if f"{key} block" in color_names else key
+        if lookup_key in color_names:
+            return task_env.blocks[color_names.index(lookup_key)]
+
+    if hasattr(task_env, "block_color_name") and hasattr(task_env, "block1"):
+        single_name = normalize_object_key(task_env.block_color_name)
+        if key == single_name or key == f"{single_name} block":
+            return task_env.block1
+
+    return None
+
+
+def actor_pose_xyz(actor):
+    if actor is None:
+        return None
+    return np.asarray(actor.get_pose().p, dtype=np.float32)
+
+
+def stage_target_pose(task_env, stage):
+    target_support = normalize_object_key(stage.get("target_support"))
+    target_region = normalize_object_key(stage.get("target_region"))
+    target_object = normalize_object_key(stage.get("target_object"))
+
+    if target_support in {"table", "center", None} or target_region == "center":
+        center_xy = get_stack_center_xy(task_env)
+        return np.array([center_xy[0], center_xy[1], None], dtype=object)
+
+    support_actor = resolve_block_actor(task_env, target_support or target_object)
+    support_pose = actor_pose_xyz(support_actor)
+    if support_pose is None:
+        return None
+    return np.array([support_pose[0], support_pose[1], support_pose[2] + 0.05], dtype=object)
+
+
+def is_move_stage_complete(task_env, stage):
+    source_actor = resolve_block_actor(task_env, stage.get("source_object") or stage.get("target_object"))
+    source_pose = actor_pose_xyz(source_actor)
+    target_pose = stage_target_pose(task_env, stage)
+    if source_pose is None or target_pose is None:
+        return False
+
+    xy_ok = np.all(np.abs(source_pose[:2] - np.asarray(target_pose[:2], dtype=np.float32)) < np.array([0.03, 0.03]))
+    return bool(xy_ok and all_grippers_open(task_env))
+
+
+def is_stack_stage_complete(task_env, stage):
+    source_actor = resolve_block_actor(task_env, stage.get("source_object"))
+    support_actor = resolve_block_actor(task_env, stage.get("target_support") or stage.get("target_object"))
+    source_pose = actor_pose_xyz(source_actor)
+    support_pose = actor_pose_xyz(support_actor)
+    if source_pose is None or support_pose is None:
+        return False
+
+    expected_pose = np.array([support_pose[0], support_pose[1], support_pose[2] + 0.05], dtype=np.float32)
+    eps = np.array([0.025, 0.025, 0.015], dtype=np.float32)
+    return bool(np.all(np.abs(source_pose - expected_pose) < eps) and all_grippers_open(task_env))
+
+
+def build_stack_blocks_completion_rule(task_env):
+    def completion_rule(obs, stage):
+        stage_type = normalize_object_key(stage.get("stage_type")) or "unknown"
+        if stage_type in {"move to region", "move_to_region", "establish base", "establish_base"}:
+            return is_move_stage_complete(task_env, stage)
+        if stage_type in {"stack on support", "stack_on_support"}:
+            return is_stack_stage_complete(task_env, stage)
+        return False
+
+    return completion_rule
+
 def normalize_instruction_key(text):
     if text is None:
         return None
@@ -106,8 +211,16 @@ def maybe_init_planner_controller(TASK_ENV, model):
     if not stages:
         return
 
-    controller = PlannerTokenStateMachine(vocab_path=vocab_path, stages=stages)
+    completion_rule = build_stack_blocks_completion_rule(TASK_ENV) if is_stack_blocks_task(TASK_ENV) else None
+    controller = PlannerTokenStateMachine(
+        vocab_path=vocab_path,
+        stages=stages,
+        completion_rule=completion_rule,
+        debug=bool(runtime_cfg.get("planner_debug", True)),
+        debug_prefix=f"[Planner][{TASK_ENV.__class__.__name__}]",
+    )
     model.set_planner_controller(controller)
+    print(f"[Planner][{TASK_ENV.__class__.__name__}] controller initialized for instruction: {instruction}")
 
 def resolve_eval_zarr_path(cfg, usr_args):
     setting = usr_args.get("ckpt_setting") or usr_args.get("task_config") or cfg.get("setting", None)
@@ -201,6 +314,7 @@ def get_model(usr_args):
     DP3_Model.planner_runtime = {
         "planner_vocab_path": usr_args.get("planner_vocab_path"),
         "planner_decomposition_path": usr_args.get("planner_decomposition_path"),
+        "planner_debug": usr_args.get("planner_debug", True),
     }
     return DP3_Model
 
