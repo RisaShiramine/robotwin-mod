@@ -266,6 +266,7 @@ def eval_policy(task_name,
         results = generate_episode_descriptions(args["task_name"], episode_info_list, test_num)
         instruction = np.random.choice(results[0][instruction_type])
         TASK_ENV.set_instruction(instruction=instruction)  # set language instruction
+        print(f"[Eval][Episode {TASK_ENV.test_num}][Seed {now_seed}] Raw instruction: {instruction}")
 
         if TASK_ENV.eval_video_path is not None:
             ffmpeg = subprocess.Popen(
