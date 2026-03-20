@@ -1,0 +1,19 @@
+{
+  "full_description": "there are three blocks colored red, green and blue on the table. their positions are randomized. move them to the center and stack them in the specified order",
+  "schema": "{A} notifies the bottom block, {B} notifies the middle block, {C} notifies the top block, {a} notifies the arm to manipulate {A}, {b} notifies the arm to manipulate {B}, {c} notifies the arm to manipulate {C}",
+  "preference": "num of words should not exceed 20. Degree of detail avg 8",
+  "seen": [
+    "Move {A}, {B}, {C} to the center, then stack {B} on {A} and {C} on {B}.",
+    "Center all blocks and build a stack: {B} on {A}, then {C} on {B}.",
+    "Bring {A}, {B}, {C} to the middle and stack them with {C} on top.",
+    "Use {a}, {b}, {c} to move {A}, {B}, {C} to the center, then stack {B} over {A} and {C} over {B}.",
+    "Transfer {A}, {B}, and {C} to the center and stack them: {B} onto {A}, {C} onto {B}.",
+    "Relocate {A}, {B}, {C} centrally and stack {C} on {B} and {B} on {A}."
+  ],
+  "unseen": [
+    "Move {A}, {B}, and {C} to the center, then stack {B} on {A} and {C} on {B}.",
+    "Bring {A}, {B}, {C} to the center and stack them with {C} on top.",
+    "Use {a}, {b}, {c} to move {A}, {B}, {C} to the middle and stack them.",
+    "Center {A}, {B}, {C} and stack {B} over {A}, {C} over {B}."
+  ]
+}

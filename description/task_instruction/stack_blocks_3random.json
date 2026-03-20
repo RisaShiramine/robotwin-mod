@@ -1,0 +1,23 @@
+{
+  "full_description": "there are three blocks on the table colored red, green and blue. move the blocks to the center and stack them in the specified order",
+  "schema": "{A} notifies the bottom block, {B} notifies the middle block, {C} notifies the top block, {a} notifies the arm to manipulate {A}, {b} notifies the arm to manipulate {B}, {c} notifies the arm to manipulate {C}",
+  "preference": "num of words should not exceed 20. Degree of detail avg 8",
+  "seen": [
+    "Move {A}, {B}, {C} to the center, then stack {B} on {A} and {C} on {B}.",
+    "Center {A}, {B}, and {C}, then stack {C} on {B} and {B} on {A}.",
+    "Bring {A}, {B}, {C} to the middle and stack them with {C} on top.",
+    "Use {a}, {b}, {c} to move {A}, {B}, {C} to the center, then stack {B} over {A} and {C} over {B}.",
+    "Transfer {A}, {B}, and {C} to the center and build a stack: {B} on {A}, {C} on {B}.",
+    "Place {A}, {B}, {C} at the center; stack {B} onto {A} and {C} onto {B}.",
+    "Reposition {A}, {B}, and {C} centrally, then stack {C} on {B} and {B} on {A}.",
+    "With {a}, {b}, {c}, centralize {A}, {B}, {C} and stack {B} above {A}, then {C} above {B}.",
+    "Move the three blocks {A}, {B}, {C} to the center and stack them in order.",
+    "Gather {A}, {B}, {C} at the center and stack {C} over {B} and {B} over {A}."
+  ],
+  "unseen": [
+    "Move {A}, {B}, and {C} to the center, then stack {B} on {A} and {C} on {B}.",
+    "Bring {A}, {B}, {C} to the center and stack them with {C} on top.",
+    "Center {A}, {B}, {C} and stack {B} over {A}, {C} over {B}.",
+    "Use {a}, {b}, {c} to move {A}, {B}, {C} to the middle and stack them."
+  ]
+}

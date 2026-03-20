@@ -1,0 +1,4027 @@
+{
+  "seen": [
+    {
+      "split": "seen",
+      "index": 0,
+      "instruction": "Use the right arm, the left arm, the left arm to move red block, green block, blue block to the center, then stack green block over red block and blue block over green block.",
+      "decomposition": {
+        "instruction": "Use the right arm, the left arm, the left arm to move red block, green block, blue block to the center, then stack green block over red block and blue block over green block.",
+        "canonical_task": "Move red, green, and blue blocks to center, then stack green on red and blue on green.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "red_block",
+          "green_block",
+          "blue_block"
+        ],
+        "final_goal": "Stack blue block on green block on red block in center.",
+        "stages": [
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": "right",
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Red block is positioned in center region."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": "left",
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center"
+            ],
+            "success_criteria": "Green block is positioned in center region near red block."
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": "left",
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "green_block_in_center"
+            ],
+            "success_criteria": "Blue block is positioned in center region near other blocks."
+          },
+          {
+            "stage": "stack_green_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "over",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "green_block_in_center",
+              "blue_block_in_center"
+            ],
+            "success_criteria": "Green block is stably stacked on top of red block in center."
+          },
+          {
+            "stage": "stack_blue_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "over",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "green_block_in_center",
+              "blue_block_in_center",
+              "green_on_red_stacked"
+            ],
+            "success_criteria": "Blue block is stably stacked on top of green block, completing three-block tower."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 1,
+      "instruction": "Center all blocks and build a stack: blue block on green block, then red block on blue block.",
+      "decomposition": {
+        "instruction": "Center all blocks and build a stack: blue block on green block, then red block on blue block.",
+        "canonical_task": "Center all blocks and build a stack with blue on green and red on blue.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "blue_block",
+          "green_block",
+          "red_block"
+        ],
+        "final_goal": "A centered stack with blue on green and red on blue.",
+        "stages": [
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "centered",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Blue block is centered on the table."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "centered",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_centered"
+            ],
+            "success_criteria": "Green block is centered on the table."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "centered",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_centered",
+              "green_block_centered"
+            ],
+            "success_criteria": "Red block is centered on the table."
+          },
+          {
+            "stage": "place_green_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "blue_block",
+            "support_object": null,
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": "top_of_blue",
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_centered",
+              "green_block_centered",
+              "red_block_centered"
+            ],
+            "success_criteria": "Green block is stacked on top of the blue block."
+          },
+          {
+            "stage": "place_red_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "green_block",
+            "support_object": null,
+            "target_support": "green_block",
+            "target_region": null,
+            "target_location": "top_of_green",
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_centered",
+              "green_block_centered",
+              "red_block_centered",
+              "green_on_blue"
+            ],
+            "success_criteria": "Red block is stacked on top of the green block, completing the stack."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 2,
+      "instruction": "Bring blue block, red block, green block to the middle and stack them with green block on top.",
+      "decomposition": {
+        "instruction": "Bring blue block, red block, green block to the middle and stack them with green block on top.",
+        "canonical_task": "Move three colored blocks to the center region and stack them in order with green on top.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "blue_block",
+          "red_block",
+          "green_block"
+        ],
+        "final_goal": "Three blocks stacked in center with green on top.",
+        "stages": [
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Blue block is positioned in the center region."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center"
+            ],
+            "success_criteria": "Red block is positioned in the center region."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center",
+              "red_block_in_center"
+            ],
+            "success_criteria": "Green block is positioned in the center region."
+          },
+          {
+            "stage": "stack_red_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "blue_block",
+            "support_object": null,
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on_top",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center",
+              "red_block_in_center",
+              "green_block_in_center"
+            ],
+            "success_criteria": "Red block is stacked on top of blue block in center."
+          },
+          {
+            "stage": "stack_green_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "red_block",
+            "support_object": null,
+            "target_support": "red_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on_top",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center",
+              "red_block_in_center",
+              "green_block_in_center",
+              "red_on_blue"
+            ],
+            "success_criteria": "Green block is stacked on top of red block, completing the tower."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 3,
+      "instruction": "Use the left arm, the left arm, the right arm to move red block, green block, blue block to the center, then stack green block over red block and blue block over green block.",
+      "decomposition": {
+        "instruction": "Use the left arm, the left arm, the right arm to move red block, green block, blue block to the center, then stack green block over red block and blue block over green block.",
+        "canonical_task": "Move red, green, and blue blocks to the center, then stack them in order: green on red, blue on green.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "red_block",
+          "green_block",
+          "blue_block"
+        ],
+        "final_goal": "A three-block tower with red at bottom, green in middle, and blue on top, all in the center region.",
+        "stages": [
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": "left",
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Red block is positioned in the center region."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": "left",
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center"
+            ],
+            "success_criteria": "Green block is positioned in the center region."
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": "right",
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "green_block_in_center"
+            ],
+            "success_criteria": "Blue block is positioned in the center region."
+          },
+          {
+            "stage": "stack_green_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": "left",
+            "required_objects": [
+              "green_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "green_block_in_center",
+              "blue_block_in_center"
+            ],
+            "success_criteria": "Green block is stably stacked on top of the red block in the center."
+          },
+          {
+            "stage": "stack_blue_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": "right",
+            "required_objects": [
+              "blue_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "green_block_in_center",
+              "blue_block_in_center",
+              "green_on_red"
+            ],
+            "success_criteria": "Blue block is stably stacked on top of the green block, completing the three-block tower."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 4,
+      "instruction": "Move green block, blue block, red block to the center, then stack blue block on green block and red block on blue block.",
+      "decomposition": {
+        "instruction": "Move green block, blue block, red block to the center, then stack blue block on green block and red block on blue block.",
+        "canonical_task": "Move three blocks to center then stack them in order: blue on green, red on blue",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "green_block",
+          "blue_block",
+          "red_block"
+        ],
+        "final_goal": "Stack red block on blue block on green block at center",
+        "stages": [
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Green block is positioned at center region"
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center"
+            ],
+            "success_criteria": "Blue block is positioned at center region"
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center",
+              "blue_block_at_center"
+            ],
+            "success_criteria": "Red block is positioned at center region"
+          },
+          {
+            "stage": "stack_blue_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": "center",
+            "target_location": "top_of_green_block",
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center",
+              "blue_block_at_center",
+              "red_block_at_center"
+            ],
+            "success_criteria": "Blue block is stacked on top of green block at center"
+          },
+          {
+            "stage": "stack_red_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": "center",
+            "target_location": "top_of_blue_block",
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center",
+              "blue_block_at_center",
+              "red_block_at_center",
+              "blue_on_green"
+            ],
+            "success_criteria": "Red block is stacked on top of blue block, completing the tower"
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 5,
+      "instruction": "Bring green block, blue block, red block to the middle and stack them with red block on top.",
+      "decomposition": {
+        "instruction": "Bring green block, blue block, red block to the middle and stack them with red block on top.",
+        "canonical_task": "Move green, blue, and red blocks to the center region and stack them in order with red on top.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "green_block",
+          "blue_block",
+          "red_block"
+        ],
+        "final_goal": "A stack of three blocks at the center with red block on top.",
+        "stages": [
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Green block is positioned at the center region."
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center"
+            ],
+            "success_criteria": "Blue block is positioned at the center region."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center",
+              "blue_block_at_center"
+            ],
+            "success_criteria": "Red block is positioned at the center region."
+          },
+          {
+            "stage": "stack_blue_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center",
+              "blue_block_at_center",
+              "red_block_at_center"
+            ],
+            "success_criteria": "Blue block is stacked on top of green block at the center."
+          },
+          {
+            "stage": "stack_red_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center",
+              "blue_block_at_center",
+              "red_block_at_center",
+              "blue_on_green"
+            ],
+            "success_criteria": "Red block is stacked on top of blue block, completing the three-block stack."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 6,
+      "instruction": "Use the left arm, the left arm, the right arm to move red block, blue block, green block to the center, then stack blue block over red block and green block over blue block.",
+      "decomposition": {
+        "instruction": "Use the left arm, the left arm, the right arm to move red block, blue block, green block to the center, then stack blue block over red block and green block over blue block.",
+        "canonical_task": "Move red, blue, and green blocks to the center, then stack them in order: blue on red, green on blue.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "red_block",
+          "blue_block",
+          "green_block"
+        ],
+        "final_goal": "A three-block tower with blue on red and green on blue, all in the center region.",
+        "stages": [
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": "left",
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Red block is positioned in the center region."
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": "left",
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center"
+            ],
+            "success_criteria": "Blue block is positioned in the center region."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": "right",
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "blue_block_in_center"
+            ],
+            "success_criteria": "Green block is positioned in the center region."
+          },
+          {
+            "stage": "stack_blue_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "red_block",
+            "support_object": null,
+            "target_support": "red_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "blue_block_in_center",
+              "green_block_in_center"
+            ],
+            "success_criteria": "Blue block is stably stacked on top of the red block."
+          },
+          {
+            "stage": "stack_green_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "blue_block",
+            "support_object": null,
+            "target_support": "blue_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "blue_block_in_center",
+              "green_block_in_center",
+              "blue_on_red"
+            ],
+            "success_criteria": "Green block is stably stacked on top of the blue block, completing the tower."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 7,
+      "instruction": "Relocate blue block, red block, green block centrally and stack green block on red block and red block on blue block.",
+      "decomposition": {
+        "instruction": "Relocate blue block, red block, green block centrally and stack green block on red block and red block on blue block.",
+        "canonical_task": "Move blue, red, and green blocks to center region and stack them in order: red on blue, then green on red.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "blue_block",
+          "red_block",
+          "green_block"
+        ],
+        "final_goal": "Stack green block on red block on blue block in center region.",
+        "stages": [
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Blue block is positioned in center region."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center"
+            ],
+            "success_criteria": "Red block is positioned in center region near blue block."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center",
+              "red_block_in_center"
+            ],
+            "success_criteria": "Green block is positioned in center region near other blocks."
+          },
+          {
+            "stage": "stack_red_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center",
+              "red_block_in_center",
+              "green_block_in_center"
+            ],
+            "success_criteria": "Red block is stably stacked on top of blue block."
+          },
+          {
+            "stage": "stack_green_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center",
+              "red_block_in_center",
+              "green_block_in_center",
+              "red_on_blue"
+            ],
+            "success_criteria": "Green block is stably stacked on top of red block."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 8,
+      "instruction": "Bring blue block, green block, red block to the middle and stack them with red block on top.",
+      "decomposition": {
+        "instruction": "Bring blue block, green block, red block to the middle and stack them with red block on top.",
+        "canonical_task": "Move three colored blocks to the center region and stack them in order with red on top.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "blue_block",
+          "green_block",
+          "red_block"
+        ],
+        "final_goal": "A stack of three blocks in the center with red block on top.",
+        "stages": [
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Blue block is positioned in the center region."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "Blue block is positioned in the center region."
+            ],
+            "success_criteria": "Green block is positioned in the center region."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "Blue block is positioned in the center region.",
+              "Green block is positioned in the center region."
+            ],
+            "success_criteria": "Red block is positioned in the center region."
+          },
+          {
+            "stage": "stack_green_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "blue_block",
+            "support_object": null,
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "Blue block is positioned in the center region.",
+              "Green block is positioned in the center region.",
+              "Red block is positioned in the center region."
+            ],
+            "success_criteria": "Green block is stacked on top of blue block in the center."
+          },
+          {
+            "stage": "stack_red_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "green_block",
+            "support_object": null,
+            "target_support": "green_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "Blue block is positioned in the center region.",
+              "Green block is positioned in the center region.",
+              "Red block is positioned in the center region.",
+              "Green block is stacked on top of blue block in the center."
+            ],
+            "success_criteria": "Red block is stacked on top of green block, completing the three-block stack."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 9,
+      "instruction": "Relocate blue block, green block, red block centrally and stack red block on green block and green block on blue block.",
+      "decomposition": {
+        "instruction": "Relocate blue block, green block, red block centrally and stack red block on green block and green block on blue block.",
+        "canonical_task": "Move blue, green, and red blocks to the center region and stack them with red on green and green on blue.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "blue_block",
+          "green_block",
+          "red_block"
+        ],
+        "final_goal": "A three-block stack in the center with red on top of green on top of blue.",
+        "stages": [
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Blue block is positioned in the center region."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center"
+            ],
+            "success_criteria": "Green block is positioned in the center region near the blue block."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center",
+              "green_block_in_center"
+            ],
+            "success_criteria": "Red block is positioned in the center region near the other blocks."
+          },
+          {
+            "stage": "stack_green_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on_top",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center",
+              "green_block_in_center",
+              "red_block_in_center"
+            ],
+            "success_criteria": "Green block is stably stacked on top of the blue block."
+          },
+          {
+            "stage": "stack_red_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on_top",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center",
+              "green_block_in_center",
+              "red_block_in_center",
+              "green_on_blue"
+            ],
+            "success_criteria": "Red block is stably stacked on top of the green block, completing the three-block stack."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 10,
+      "instruction": "Center all blocks and build a stack: green block on red block, then blue block on green block.",
+      "decomposition": {
+        "instruction": "Center all blocks and build a stack: green block on red block, then blue block on green block.",
+        "canonical_task": "Center all blocks and stack them in order: green on red, then blue on green.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "green_block",
+          "red_block",
+          "blue_block"
+        ],
+        "final_goal": "A centered stack with blue on green on red.",
+        "stages": [
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "centered",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Red block is centered on the table."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "centered",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_centered"
+            ],
+            "success_criteria": "Green block is centered on the table."
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "centered",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_centered",
+              "green_block_centered"
+            ],
+            "success_criteria": "Blue block is centered on the table."
+          },
+          {
+            "stage": "place_green_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": "center",
+            "target_location": "top_of_red_block",
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "all_blocks_centered"
+            ],
+            "success_criteria": "Green block is stably stacked on top of the red block."
+          },
+          {
+            "stage": "place_blue_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": "center",
+            "target_location": "top_of_green_block",
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "all_blocks_centered",
+              "green_on_red"
+            ],
+            "success_criteria": "Blue block is stably stacked on top of the green block."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 11,
+      "instruction": "Use the right arm, the left arm, the right arm to move blue block, green block, red block to the center, then stack green block over blue block and red block over green block.",
+      "decomposition": {
+        "instruction": "Use the right arm, the left arm, the right arm to move blue block, green block, red block to the center, then stack green block over blue block and red block over green block.",
+        "canonical_task": "Move blue, green, and red blocks to center, then stack green on blue and red on green.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "blue_block",
+          "green_block",
+          "red_block"
+        ],
+        "final_goal": "Stack red block on green block on blue block at center.",
+        "stages": [
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": "right",
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Blue block is positioned at center region."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": "left",
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center"
+            ],
+            "success_criteria": "Green block is positioned at center region."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": "right",
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "green_block_at_center"
+            ],
+            "success_criteria": "Red block is positioned at center region."
+          },
+          {
+            "stage": "stack_green_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "over",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "green_block_at_center",
+              "red_block_at_center"
+            ],
+            "success_criteria": "Green block is stacked on top of blue block at center."
+          },
+          {
+            "stage": "stack_red_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "over",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "green_block_at_center",
+              "red_block_at_center",
+              "green_on_blue"
+            ],
+            "success_criteria": "Red block is stacked on top of green block, completing the three-block tower."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 12,
+      "instruction": "Relocate red block, blue block, green block centrally and stack green block on blue block and blue block on red block.",
+      "decomposition": {
+        "instruction": "Relocate red block, blue block, green block centrally and stack green block on blue block and blue block on red block.",
+        "canonical_task": "Move red, blue, and green blocks to center region and stack them in order: blue on red, then green on blue.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "red_block",
+          "blue_block",
+          "green_block"
+        ],
+        "final_goal": "Stack green block on blue block on red block in center region.",
+        "stages": [
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Red block is positioned in center region."
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center"
+            ],
+            "success_criteria": "Blue block is positioned in center region near red block."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "blue_block_in_center"
+            ],
+            "success_criteria": "Green block is positioned in center region near other blocks."
+          },
+          {
+            "stage": "stack_blue_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "blue_block_in_center",
+              "green_block_in_center"
+            ],
+            "success_criteria": "Blue block is stably stacked on top of red block."
+          },
+          {
+            "stage": "stack_green_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "blue_block_in_center",
+              "green_block_in_center",
+              "blue_on_red_stacked"
+            ],
+            "success_criteria": "Green block is stably stacked on top of blue block."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 13,
+      "instruction": "Move blue block, red block, green block to the center, then stack red block on blue block and green block on red block.",
+      "decomposition": {
+        "instruction": "Move blue block, red block, green block to the center, then stack red block on blue block and green block on red block.",
+        "canonical_task": "Move three blocks to center then stack them in order: red on blue, green on red",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "blue_block",
+          "red_block",
+          "green_block"
+        ],
+        "final_goal": "Stack green block on red block which is on blue block, all initially moved to center",
+        "stages": [
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Blue block is positioned at center region"
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center"
+            ],
+            "success_criteria": "Red block is positioned at center region"
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "red_block_at_center"
+            ],
+            "success_criteria": "Green block is positioned at center region"
+          },
+          {
+            "stage": "stack_red_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "red_block_at_center",
+              "green_block_at_center"
+            ],
+            "success_criteria": "Red block is stably stacked on top of blue block"
+          },
+          {
+            "stage": "stack_green_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "red_block_at_center",
+              "green_block_at_center",
+              "red_on_blue"
+            ],
+            "success_criteria": "Green block is stably stacked on top of red block"
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 14,
+      "instruction": "Transfer blue block, green block, and red block to the center and stack them: green block onto blue block, red block onto green block.",
+      "decomposition": {
+        "instruction": "Transfer blue block, green block, and red block to the center and stack them: green block onto blue block, red block onto green block.",
+        "canonical_task": "Move blue, green, and red blocks to center region and stack them in order: green on blue, red on green.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "blue_block",
+          "green_block",
+          "red_block"
+        ],
+        "final_goal": "Stack red block on green block on blue block in center region.",
+        "stages": [
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "establish_base",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Blue block is positioned in center region."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "near",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center"
+            ],
+            "success_criteria": "Green block is positioned near blue block in center region."
+          },
+          {
+            "stage": "stack_green_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center",
+              "green_block_in_center"
+            ],
+            "success_criteria": "Green block is stably stacked on blue block."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "near",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center",
+              "green_block_in_center",
+              "green_on_blue"
+            ],
+            "success_criteria": "Red block is positioned near green-blue stack in center region."
+          },
+          {
+            "stage": "stack_red_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center",
+              "green_block_in_center",
+              "green_on_blue",
+              "red_block_in_center"
+            ],
+            "success_criteria": "Red block is stably stacked on green block, completing three-block tower."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 15,
+      "instruction": "Bring green block, red block, blue block to the middle and stack them with blue block on top.",
+      "decomposition": {
+        "instruction": "Bring green block, red block, blue block to the middle and stack them with blue block on top.",
+        "canonical_task": "Move three colored blocks to the center region and stack them in a specific order with blue on top.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "green_block",
+          "red_block",
+          "blue_block"
+        ],
+        "final_goal": "Stack green, red, and blue blocks in the center with blue on top.",
+        "stages": [
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Green block is positioned in the center region."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_in_center"
+            ],
+            "success_criteria": "Red block is positioned in the center region."
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_in_center",
+              "red_block_in_center"
+            ],
+            "success_criteria": "Blue block is positioned in the center region."
+          },
+          {
+            "stage": "stack_red_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on_top_of",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_in_center",
+              "red_block_in_center",
+              "blue_block_in_center"
+            ],
+            "success_criteria": "Red block is stacked on top of green block in the center."
+          },
+          {
+            "stage": "stack_blue_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on_top_of",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_in_center",
+              "red_block_in_center",
+              "blue_block_in_center",
+              "red_on_green"
+            ],
+            "success_criteria": "Blue block is stacked on top of red block, completing the tower with blue on top."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 16,
+      "instruction": "Bring red block, blue block, green block to the middle and stack them with green block on top.",
+      "decomposition": {
+        "instruction": "Bring red block, blue block, green block to the middle and stack them with green block on top.",
+        "canonical_task": "Move red, blue, and green blocks to the center region and stack them in order with green on top.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "red_block",
+          "blue_block",
+          "green_block"
+        ],
+        "final_goal": "A stack of three blocks in the center with green block on top.",
+        "stages": [
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Red block is positioned in the center region."
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center"
+            ],
+            "success_criteria": "Blue block is positioned in the center region."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "blue_block_in_center"
+            ],
+            "success_criteria": "Green block is positioned in the center region."
+          },
+          {
+            "stage": "stack_blue_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "blue_block_in_center",
+              "green_block_in_center"
+            ],
+            "success_criteria": "Blue block is stably stacked on top of red block."
+          },
+          {
+            "stage": "stack_green_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "blue_block_in_center",
+              "green_block_in_center",
+              "blue_on_red"
+            ],
+            "success_criteria": "Green block is stably stacked on top of blue block, completing the stack."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 17,
+      "instruction": "Transfer blue block, red block, and green block to the center and stack them: red block onto blue block, green block onto red block.",
+      "decomposition": {
+        "instruction": "Transfer blue block, red block, and green block to the center and stack them: red block onto blue block, green block onto red block.",
+        "canonical_task": "Move blue, red, and green blocks to center region and stack them in order: red on blue, green on red.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "blue_block",
+          "red_block",
+          "green_block"
+        ],
+        "final_goal": "Stack red block on blue block and green block on red block in the center.",
+        "stages": [
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Blue block is positioned in center region."
+          },
+          {
+            "stage": "stack_red_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center"
+            ],
+            "success_criteria": "Red block is stably stacked on blue block in center."
+          },
+          {
+            "stage": "stack_green_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_in_center",
+              "red_on_blue"
+            ],
+            "success_criteria": "Green block is stably stacked on red block, completing the stack."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 18,
+      "instruction": "Transfer green block, blue block, and red block to the center and stack them: blue block onto green block, red block onto blue block.",
+      "decomposition": {
+        "instruction": "Transfer green block, blue block, and red block to the center and stack them: blue block onto green block, red block onto blue block.",
+        "canonical_task": "Move green, blue, and red blocks to center region and stack them in order: green at base, blue on green, red on blue.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "green_block",
+          "blue_block",
+          "red_block"
+        ],
+        "final_goal": "Stack blue block on green block and red block on blue block at center.",
+        "stages": [
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Green block is positioned at center region."
+          },
+          {
+            "stage": "stack_blue_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block at center"
+            ],
+            "success_criteria": "Blue block is stacked on top of green block at center."
+          },
+          {
+            "stage": "stack_red_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block at center",
+              "blue_block stacked on green"
+            ],
+            "success_criteria": "Red block is stacked on top of blue block, completing the tower."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 19,
+      "instruction": "Use the left arm, the right arm, the right arm to move blue block, green block, red block to the center, then stack green block over blue block and red block over green block.",
+      "decomposition": {
+        "instruction": "Use the left arm, the right arm, the right arm to move blue block, green block, red block to the center, then stack green block over blue block and red block over green block.",
+        "canonical_task": "Move blue, green, and red blocks to center, then stack them in order: green on blue, red on green.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "blue_block",
+          "green_block",
+          "red_block"
+        ],
+        "final_goal": "A three-block tower at center with blue at bottom, green in middle, red on top.",
+        "stages": [
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": "left",
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Blue block is positioned at the center region."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": "right",
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center"
+            ],
+            "success_criteria": "Green block is positioned at the center region."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": "right",
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "green_block_at_center"
+            ],
+            "success_criteria": "Red block is positioned at the center region."
+          },
+          {
+            "stage": "stack_green_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "green_block_at_center",
+              "red_block_at_center"
+            ],
+            "success_criteria": "Green block is stably stacked on top of the blue block at center."
+          },
+          {
+            "stage": "stack_red_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "green_block_at_center",
+              "red_block_at_center",
+              "green_on_blue"
+            ],
+            "success_criteria": "Red block is stably stacked on top of the green block, completing the three-block tower."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 20,
+      "instruction": "Transfer red block, blue block, and green block to the center and stack them: blue block onto red block, green block onto blue block.",
+      "decomposition": {
+        "instruction": "Transfer red block, blue block, and green block to the center and stack them: blue block onto red block, green block onto blue block.",
+        "canonical_task": "Move red, blue, and green blocks to center region and stack them in order: blue on red, green on blue",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "red_block",
+          "blue_block",
+          "green_block"
+        ],
+        "final_goal": "Stack blue block on red block and green block on blue block in the center",
+        "stages": [
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Red block is positioned in center region"
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center"
+            ],
+            "success_criteria": "Blue block is positioned in center region near red block"
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "blue_block_in_center"
+            ],
+            "success_criteria": "Green block is positioned in center region near other blocks"
+          },
+          {
+            "stage": "stack_blue_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on_top",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "blue_block_in_center",
+              "green_block_in_center"
+            ],
+            "success_criteria": "Blue block is stably placed on top of red block"
+          },
+          {
+            "stage": "stack_green_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on_top",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_in_center",
+              "blue_block_in_center",
+              "green_block_in_center",
+              "blue_on_red"
+            ],
+            "success_criteria": "Green block is stably placed on top of blue block"
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 21,
+      "instruction": "Relocate green block, blue block, red block centrally and stack red block on blue block and blue block on green block.",
+      "decomposition": {
+        "instruction": "Relocate green block, blue block, red block centrally and stack red block on blue block and blue block on green block.",
+        "canonical_task": "Move green, blue, and red blocks to the center region and stack them with red on blue and blue on green.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "green_block",
+          "blue_block",
+          "red_block"
+        ],
+        "final_goal": "Stack red block on blue block on green block in the center.",
+        "stages": [
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Green block is positioned in the center region."
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_in_center"
+            ],
+            "success_criteria": "Blue block is positioned in the center region."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_in_center",
+              "blue_block_in_center"
+            ],
+            "success_criteria": "Red block is positioned in the center region."
+          },
+          {
+            "stage": "stack_blue_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_in_center",
+              "blue_block_in_center",
+              "red_block_in_center"
+            ],
+            "success_criteria": "Blue block is stably stacked on top of the green block."
+          },
+          {
+            "stage": "stack_red_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_in_center",
+              "blue_block_in_center",
+              "red_block_in_center",
+              "blue_on_green"
+            ],
+            "success_criteria": "Red block is stably stacked on top of the blue block."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 22,
+      "instruction": "Use the left arm, the right arm, the right arm to move blue block, red block, green block to the center, then stack red block over blue block and green block over red block.",
+      "decomposition": {
+        "instruction": "Use the left arm, the right arm, the right arm to move blue block, red block, green block to the center, then stack red block over blue block and green block over red block.",
+        "canonical_task": "Move blue, red, and green blocks to center, then stack red on blue and green on red.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "blue_block",
+          "red_block",
+          "green_block"
+        ],
+        "final_goal": "Stack red block on blue block and green block on red block at center.",
+        "stages": [
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": "left",
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Blue block is positioned at center region."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": "right",
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center"
+            ],
+            "success_criteria": "Red block is positioned at center region."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": "right",
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "red_block_at_center"
+            ],
+            "success_criteria": "Green block is positioned at center region."
+          },
+          {
+            "stage": "stack_red_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "over",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "red_block_at_center",
+              "green_block_at_center"
+            ],
+            "success_criteria": "Red block is stacked directly on top of blue block at center."
+          },
+          {
+            "stage": "stack_green_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "over",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "red_block_at_center",
+              "green_block_at_center",
+              "red_on_blue"
+            ],
+            "success_criteria": "Green block is stacked directly on top of red block at center."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 23,
+      "instruction": "Center all blocks and build a stack: green block on blue block, then red block on green block.",
+      "decomposition": {
+        "instruction": "Center all blocks and build a stack: green block on blue block, then red block on green block.",
+        "canonical_task": "Center all blocks and stack them in order: blue at bottom, green in middle, red on top.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "green_block",
+          "blue_block",
+          "red_block"
+        ],
+        "final_goal": "A centered stack with blue at bottom, green in middle, and red on top.",
+        "stages": [
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Blue block is positioned at the center of the workspace."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center"
+            ],
+            "success_criteria": "Green block is positioned at the center of the workspace."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "green_block_at_center"
+            ],
+            "success_criteria": "Red block is positioned at the center of the workspace."
+          },
+          {
+            "stage": "stack_green_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": "top_of_blue_block",
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "green_block_at_center",
+              "red_block_at_center"
+            ],
+            "success_criteria": "Green block is stably placed on top of the blue block."
+          },
+          {
+            "stage": "stack_red_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": null,
+            "target_location": "top_of_green_block",
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "green_block_at_center",
+              "red_block_at_center",
+              "green_on_blue"
+            ],
+            "success_criteria": "Red block is stably placed on top of the green block, completing the stack."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 24,
+      "instruction": "Center all blocks and build a stack: blue block on red block, then green block on blue block.",
+      "decomposition": {
+        "instruction": "Center all blocks and build a stack: blue block on red block, then green block on blue block.",
+        "canonical_task": "Center all blocks and stack them in order: blue on red, then green on blue.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "blue_block",
+          "red_block",
+          "green_block"
+        ],
+        "final_goal": "A centered stack with blue on red and green on blue.",
+        "stages": [
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "centered",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Red block is centered on the table."
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "centered",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_centered"
+            ],
+            "success_criteria": "Blue block is centered on the table."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "centered",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block_centered",
+              "blue_block_centered"
+            ],
+            "success_criteria": "Green block is centered on the table."
+          },
+          {
+            "stage": "stack_blue_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": null,
+            "target_location": "top_of_red_block",
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "all_blocks_centered"
+            ],
+            "success_criteria": "Blue block is stably placed on top of the red block."
+          },
+          {
+            "stage": "stack_green_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": "top_of_blue_block",
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "all_blocks_centered",
+              "blue_on_red"
+            ],
+            "success_criteria": "Green block is stably placed on top of the blue block."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 25,
+      "instruction": "Bring red block, green block, blue block to the middle and stack them with blue block on top.",
+      "decomposition": {
+        "instruction": "Bring red block, green block, blue block to the middle and stack them with blue block on top.",
+        "canonical_task": "Move red, green, and blue blocks to the center region and stack them in order with blue on top.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "red_block",
+          "green_block",
+          "blue_block"
+        ],
+        "final_goal": "A stack of red, green, and blue blocks with blue on top, positioned in the center.",
+        "stages": [
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Red block is positioned in the center region."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "Red block is positioned in the center region."
+            ],
+            "success_criteria": "Green block is positioned in the center region."
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "Red block is positioned in the center region.",
+              "Green block is positioned in the center region."
+            ],
+            "success_criteria": "Blue block is positioned in the center region."
+          },
+          {
+            "stage": "stack_green_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "red_block",
+            "support_object": null,
+            "target_support": "red_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "Red block is positioned in the center region.",
+              "Green block is positioned in the center region.",
+              "Blue block is positioned in the center region."
+            ],
+            "success_criteria": "Green block is stably placed on top of the red block."
+          },
+          {
+            "stage": "stack_blue_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "green_block",
+            "support_object": null,
+            "target_support": "green_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "Red block is positioned in the center region.",
+              "Green block is positioned in the center region.",
+              "Blue block is positioned in the center region.",
+              "Green block is stably placed on top of the red block."
+            ],
+            "success_criteria": "Blue block is stably placed on top of the green block, completing the stack."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 26,
+      "instruction": "Move green block, red block, blue block to the center, then stack red block on green block and blue block on red block.",
+      "decomposition": {
+        "instruction": "Move green block, red block, blue block to the center, then stack red block on green block and blue block on red block.",
+        "canonical_task": "Move three colored blocks to the center region, then stack them in order: red on green, blue on red.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "green_block",
+          "red_block",
+          "blue_block"
+        ],
+        "final_goal": "Stack blue block on red block on green block in the center.",
+        "stages": [
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Green block is positioned in the center region."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_in_center"
+            ],
+            "success_criteria": "Red block is positioned in the center region."
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": null,
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_in_center",
+              "red_block_in_center"
+            ],
+            "success_criteria": "Blue block is positioned in the center region."
+          },
+          {
+            "stage": "stack_red_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_in_center",
+              "red_block_in_center",
+              "blue_block_in_center"
+            ],
+            "success_criteria": "Red block is stacked on top of green block in the center."
+          },
+          {
+            "stage": "stack_blue_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_in_center",
+              "red_block_in_center",
+              "blue_block_in_center",
+              "red_on_green"
+            ],
+            "success_criteria": "Blue block is stacked on top of red block, completing the three-block stack."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 27,
+      "instruction": "Use the right arm, the left arm, the right arm to move green block, red block, blue block to the center, then stack red block over green block and blue block over red block.",
+      "decomposition": {
+        "instruction": "Use the right arm, the left arm, the right arm to move green block, red block, blue block to the center, then stack red block over green block and blue block over red block.",
+        "canonical_task": "Move green, red, and blue blocks to center, then stack red on green and blue on red.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "green_block",
+          "red_block",
+          "blue_block"
+        ],
+        "final_goal": "Stack red block on green block and blue block on red block at center.",
+        "stages": [
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "at",
+            "preferred_arm": "right",
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Green block is positioned at center region."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "at",
+            "preferred_arm": "left",
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center"
+            ],
+            "success_criteria": "Red block is positioned at center region."
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "at",
+            "preferred_arm": "right",
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center",
+              "red_block_at_center"
+            ],
+            "success_criteria": "Blue block is positioned at center region."
+          },
+          {
+            "stage": "stack_red_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": "center",
+            "target_location": "top_of_green_block",
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center",
+              "red_block_at_center",
+              "blue_block_at_center"
+            ],
+            "success_criteria": "Red block is stacked on top of green block at center."
+          },
+          {
+            "stage": "stack_blue_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": "center",
+            "target_location": "top_of_red_block",
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center",
+              "red_block_at_center",
+              "blue_block_at_center",
+              "red_on_green"
+            ],
+            "success_criteria": "Blue block is stacked on top of red block, forming a three-block tower."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 28,
+      "instruction": "Use the right arm, the right arm, the left arm to move green block, blue block, red block to the center, then stack blue block over green block and red block over blue block.",
+      "decomposition": {
+        "instruction": "Use the right arm, the right arm, the left arm to move green block, blue block, red block to the center, then stack blue block over green block and red block over blue block.",
+        "canonical_task": "Move green, blue, and red blocks to center, then stack blue on green and red on blue.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "green_block",
+          "blue_block",
+          "red_block"
+        ],
+        "final_goal": "Stack red block on blue block on green block at center.",
+        "stages": [
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "at",
+            "preferred_arm": "right",
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Green block is positioned at center region."
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "at",
+            "preferred_arm": "right",
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center"
+            ],
+            "success_criteria": "Blue block is positioned at center region near green block."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "at",
+            "preferred_arm": "left",
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center",
+              "blue_block_at_center"
+            ],
+            "success_criteria": "Red block is positioned at center region near other blocks."
+          },
+          {
+            "stage": "stack_blue_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": "center",
+            "target_location": "top_of_green_block",
+            "spatial_relation": "on",
+            "preferred_arm": "right",
+            "required_objects": [
+              "blue_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center",
+              "blue_block_at_center",
+              "red_block_at_center"
+            ],
+            "success_criteria": "Blue block is stably stacked on top of green block at center."
+          },
+          {
+            "stage": "stack_red_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": "center",
+            "target_location": "top_of_blue_block",
+            "spatial_relation": "on",
+            "preferred_arm": "left",
+            "required_objects": [
+              "red_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "green_block_at_center",
+              "blue_block_at_center",
+              "red_block_at_center",
+              "blue_on_green"
+            ],
+            "success_criteria": "Red block is stably stacked on top of blue block, completing three-block tower."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 29,
+      "instruction": "Center all blocks and build a stack: red block on blue block, then green block on red block.",
+      "decomposition": {
+        "instruction": "Center all blocks and build a stack: red block on blue block, then green block on red block.",
+        "canonical_task": "Center all blocks and stack them in order: red on blue, then green on red.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "red_block",
+          "blue_block",
+          "green_block"
+        ],
+        "final_goal": "A centered stack with green on red on blue.",
+        "stages": [
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "establish_base",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "centered",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Blue block is centered on the table."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "centered",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_centered"
+            ],
+            "success_criteria": "Red block is centered on the table."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": "center",
+            "spatial_relation": "centered",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_centered",
+              "red_block_centered"
+            ],
+            "success_criteria": "Green block is centered on the table."
+          },
+          {
+            "stage": "stack_red_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": "top_center",
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "all_blocks_centered"
+            ],
+            "success_criteria": "Red block is stably placed on top of the blue block."
+          },
+          {
+            "stage": "stack_green_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": null,
+            "target_location": "top_center",
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_on_blue_stack"
+            ],
+            "success_criteria": "Green block is stably placed on top of the red block."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 30,
+      "instruction": "Use the right arm, the left arm, the right arm to move blue block, red block, green block to the center, then stack red block over blue block and green block over red block.",
+      "decomposition": {
+        "instruction": "Use the right arm, the left arm, the right arm to move blue block, red block, green block to the center, then stack red block over blue block and green block over red block.",
+        "canonical_task": "Move blue, red, and green blocks to center, then stack red on blue and green on red.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "blue_block",
+          "red_block",
+          "green_block"
+        ],
+        "final_goal": "Stack red block on blue block and green block on red block at center.",
+        "stages": [
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": "right",
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Blue block is positioned at center region."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": "left",
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center"
+            ],
+            "success_criteria": "Red block is positioned at center region."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": "right",
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "red_block_at_center"
+            ],
+            "success_criteria": "Green block is positioned at center region."
+          },
+          {
+            "stage": "stack_red_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "red_block_at_center",
+              "green_block_at_center"
+            ],
+            "success_criteria": "Red block is stably stacked on top of blue block at center."
+          },
+          {
+            "stage": "stack_green_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "red_block_at_center",
+              "green_block_at_center",
+              "red_on_blue"
+            ],
+            "success_criteria": "Green block is stably stacked on top of red block, completing the three-block stack."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 31,
+      "instruction": "Move red block, blue block, green block to the center, then stack blue block on red block and green block on blue block.",
+      "decomposition": {
+        "instruction": "Move red block, blue block, green block to the center, then stack blue block on red block and green block on blue block.",
+        "canonical_task": "Move three colored blocks to the center region, then stack them in a specific order: blue on red, then green on blue.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "red_block",
+          "blue_block",
+          "green_block"
+        ],
+        "final_goal": "A three-block stack with blue on red and green on blue, all positioned in the center region.",
+        "stages": [
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Red block is positioned within the center region."
+          },
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block is at center"
+            ],
+            "success_criteria": "Blue block is positioned within the center region."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block is at center",
+              "blue_block is at center"
+            ],
+            "success_criteria": "Green block is positioned within the center region."
+          },
+          {
+            "stage": "stack_blue_on_red",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "blue_block",
+            "target_object": "red_block",
+            "support_object": "red_block",
+            "target_support": "red_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "blue_block",
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block is at center",
+              "blue_block is at center",
+              "green_block is at center"
+            ],
+            "success_criteria": "Blue block is stably stacked on top of the red block."
+          },
+          {
+            "stage": "stack_green_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "red_block is at center",
+              "blue_block is at center",
+              "green_block is at center",
+              "blue_block is on red_block"
+            ],
+            "success_criteria": "Green block is stably stacked on top of the blue block, completing the three-block tower."
+          }
+        ]
+      }
+    },
+    {
+      "split": "seen",
+      "index": 32,
+      "instruction": "Use the right arm, the left arm, the left arm to move blue block, green block, red block to the center, then stack green block over blue block and red block over green block.",
+      "decomposition": {
+        "instruction": "Use the right arm, the left arm, the left arm to move blue block, green block, red block to the center, then stack green block over blue block and red block over green block.",
+        "canonical_task": "Move blue, green, and red blocks to center, then stack green on blue and red on green.",
+        "task_id": null,
+        "task_category": "stack",
+        "scene_objects": [
+          "blue_block",
+          "green_block",
+          "red_block"
+        ],
+        "final_goal": "Blue, green, and red blocks are in center with green stacked on blue and red stacked on green.",
+        "stages": [
+          {
+            "stage": "move_blue_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "blue_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": "right",
+            "required_objects": [
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [],
+            "success_criteria": "Blue block is positioned at center region."
+          },
+          {
+            "stage": "move_green_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "green_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": "left",
+            "required_objects": [
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center"
+            ],
+            "success_criteria": "Green block is positioned at center region."
+          },
+          {
+            "stage": "move_red_to_center",
+            "stage_type": "move_to_region",
+            "action_type": "move",
+            "source_object": "red_block",
+            "target_object": null,
+            "support_object": null,
+            "target_support": null,
+            "target_region": "center",
+            "target_location": null,
+            "spatial_relation": "at",
+            "preferred_arm": "left",
+            "required_objects": [
+              "red_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "green_block_at_center"
+            ],
+            "success_criteria": "Red block is positioned at center region."
+          },
+          {
+            "stage": "stack_green_on_blue",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "green_block",
+            "target_object": "blue_block",
+            "support_object": "blue_block",
+            "target_support": "blue_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "green_block",
+              "blue_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "green_block_at_center",
+              "red_block_at_center"
+            ],
+            "success_criteria": "Green block is stacked on top of blue block at center."
+          },
+          {
+            "stage": "stack_red_on_green",
+            "stage_type": "stack_on_support",
+            "action_type": "stack",
+            "source_object": "red_block",
+            "target_object": "green_block",
+            "support_object": "green_block",
+            "target_support": "green_block",
+            "target_region": null,
+            "target_location": null,
+            "spatial_relation": "on",
+            "preferred_arm": null,
+            "required_objects": [
+              "red_block",
+              "green_block"
+            ],
+            "completed_subgoals_before_stage": [
+              "blue_block_at_center",
+              "green_block_at_center",
+              "red_block_at_center",
+              "green_on_blue"
+            ],
+            "success_criteria": "Red block is stacked on top of green block, completing the three-block tower."
+          }
+        ]
+      }
+    }
+  ],
+  "unseen": []
+}

@@ -47,6 +47,7 @@ stack_blocks_two: 320
 stack_block_one: 200
 stack_blocks_one: 300
 stack_3blocks_one: 300
+stack_3blocks_random: 600
 stack_green_block: 300
 stack_blue_block: 300
 stack2_green_block: 300
