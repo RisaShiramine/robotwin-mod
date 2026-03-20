@@ -34,6 +34,43 @@ from diffusion_policy_3d.dataset.robot_dataset import inspect_planner_tokens
 from diffusion_policy_3d.env_runner.planner_controller import PlannerTokenStateMachine
 
 
+
+
+
+
+def planner_debug_once(model, key, message, force=False):
+    runtime_cfg = getattr(model, "planner_runtime", None)
+    if runtime_cfg is None:
+        planner_debug_log(model, message, force=force)
+        return
+    logged = runtime_cfg.setdefault("logged_messages", set())
+    if key in logged:
+        return
+    logged.add(key)
+    planner_debug_log(model, message, force=force)
+
+def planner_debug_enabled(model):
+    runtime_cfg = getattr(model, "planner_runtime", None) or {}
+    return bool(runtime_cfg.get("planner_debug", True))
+
+
+def planner_debug_log(model, message, force=False):
+    if force or planner_debug_enabled(model):
+        print(f"[Planner][Runtime] {message}")
+
+
+def get_policy_planner_enabled(model):
+    policy = getattr(model, "policy", None)
+    return bool(getattr(policy, "use_planner_tokens", False))
+
+
+def log_controller_state(model, prefix):
+    controller = getattr(model.env_runner, "planner_controller", None)
+    if controller is None:
+        return
+    tokens = controller.current_tokens()
+    planner_debug_log(model, f"{prefix}: {controller.describe_stage()} tokens={tokens}")
+
 def encode_obs(observation, planner_tokens=None):  # Post-Process Observation
     obs = dict()
     obs['agent_pos'] = observation['joint_action']['vector']
@@ -199,16 +236,28 @@ def maybe_init_planner_controller(TASK_ENV, model):
 
     runtime_cfg = getattr(model, "planner_runtime", None)
     if not runtime_cfg:
+        planner_debug_once(model, "missing_runtime", "planner_runtime is missing; planner controller will not be created")
         return
 
     vocab_path = runtime_cfg.get("planner_vocab_path")
     decomposition_path = runtime_cfg.get("planner_decomposition_path")
     if not vocab_path or not decomposition_path:
+        planner_debug_once(
+            model,
+            "missing_planner_paths",
+            f"planner controller disabled because planner_vocab_path={vocab_path} planner_decomposition_path={decomposition_path}",
+            force=True,
+        )
         return
 
     instruction = TASK_ENV.get_instruction()
+    if not instruction:
+        planner_debug_once(model, "missing_instruction", "TASK_ENV.get_instruction() is empty; cannot initialize planner controller", force=True)
+        return
+
     stages = load_planner_stages_from_decomposition(decomposition_path, instruction)
     if not stages:
+        planner_debug_once(model, f"unmatched_instruction::{instruction}", f"no planner stages matched instruction: {instruction}", force=True)
         return
 
     completion_rule = build_stack_blocks_completion_rule(TASK_ENV) if is_stack_blocks_task(TASK_ENV) else None
@@ -220,7 +269,8 @@ def maybe_init_planner_controller(TASK_ENV, model):
         debug_prefix=f"[Planner][{TASK_ENV.__class__.__name__}]",
     )
     model.set_planner_controller(controller)
-    print(f"[Planner][{TASK_ENV.__class__.__name__}] controller initialized for instruction: {instruction}")
+    planner_debug_log(model, f"controller initialized for instruction: {instruction}", force=True)
+    log_controller_state(model, "initial stage")
 
 def resolve_eval_zarr_path(cfg, usr_args):
     setting = usr_args.get("ckpt_setting") or usr_args.get("task_config") or cfg.get("setting", None)
@@ -311,6 +361,7 @@ def get_model(usr_args):
     OmegaConf.set_struct(cfg, True)
 
     DP3_Model = DP3(cfg, usr_args)
+    planner_debug_log(DP3_Model, f"checkpoint planner branch enabled={get_policy_planner_enabled(DP3_Model)}", force=True)
     DP3_Model.planner_runtime = {
         "planner_vocab_path": usr_args.get("planner_vocab_path"),
         "planner_decomposition_path": usr_args.get("planner_decomposition_path"),
@@ -322,8 +373,11 @@ def get_model(usr_args):
 def eval(TASK_ENV, model, observation):
     maybe_init_planner_controller(TASK_ENV, model)
     planner_tokens = None
+    if get_policy_planner_enabled(model) and getattr(model.env_runner, "planner_controller", None) is None:
+        planner_debug_once(model, "missing_runtime_controller", "planner-conditioned checkpoint loaded, but no runtime planner controller is active", force=True)
     if hasattr(model, "env_runner") and getattr(model.env_runner, "planner_controller", None) is not None:
         planner_tokens = model.env_runner.planner_controller.current_tokens()
+        log_controller_state(model, "before action chunk")
     obs = encode_obs(observation, planner_tokens=planner_tokens)  # Post-Process Observation
     # instruction = TASK_ENV.get_instruction()
 
@@ -340,8 +394,10 @@ def eval(TASK_ENV, model, observation):
         planner_tokens = None
         if hasattr(model, "env_runner") and getattr(model.env_runner, "planner_controller", None) is not None:
             next_obs = encode_obs(observation)
-            model.env_runner.planner_controller.maybe_advance(next_obs)
+            advanced = model.env_runner.planner_controller.maybe_advance(next_obs)
             planner_tokens = model.env_runner.planner_controller.current_tokens()
+            if advanced:
+                log_controller_state(model, "after advance")
         obs = encode_obs(observation, planner_tokens=planner_tokens)
         model.update_obs(obs)  # Update Observation, `update_obs` here can be modified
 
@@ -351,3 +407,5 @@ def reset_model(
     model.env_runner.reset_obs()
     if getattr(model.env_runner, "planner_controller", None) is not None:
         model.env_runner.planner_controller.reset()
+    elif get_policy_planner_enabled(model):
+        planner_debug_once(model, "reset_without_controller", "reset with planner-conditioned checkpoint but no controller attached", force=True)
