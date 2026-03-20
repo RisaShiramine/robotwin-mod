@@ -42,7 +42,12 @@ class RobotDataset(BaseDataset):
         current_file_path = os.path.abspath(__file__)
         parent_directory = os.path.dirname(current_file_path)
         zarr_path = os.path.join(parent_directory, zarr_path)
-        self.replay_buffer = ReplayBuffer.copy_from_path(zarr_path, keys=["state", "action", "point_cloud"])  # 'img'
+        replay_root = ReplayBuffer.create_from_path(zarr_path)
+        keys = ["state", "action", "point_cloud"]
+        self.has_planner_tokens = all(name in replay_root.keys() for name in ("stage_id", "source_id", "target_id"))
+        if self.has_planner_tokens:
+            keys.extend(["stage_id", "source_id", "target_id"])
+        self.replay_buffer = ReplayBuffer.copy_from_path(zarr_path, keys=keys)  # 'img'
         val_mask = get_val_mask(n_episodes=self.replay_buffer.n_episodes, val_ratio=val_ratio, seed=seed)
         train_mask = ~val_mask
         train_mask = downsample_mask(mask=train_mask, max_n=max_train_episodes, seed=seed)
@@ -103,5 +108,10 @@ class RobotDataset(BaseDataset):
     def __getitem__(self, idx: int) -> Dict[str, torch.Tensor]:
         sample = self.sampler.sample_sequence(idx)
         data = self._sample_to_data(sample)
+        if self.has_planner_tokens:
+            buffer_start_idx = int(self.sampler.indices[idx][0])
+            data["stage_id"] = np.array(self.replay_buffer["stage_id"][buffer_start_idx], dtype=np.int64)
+            data["source_id"] = np.array(self.replay_buffer["source_id"][buffer_start_idx], dtype=np.int64)
+            data["target_id"] = np.array(self.replay_buffer["target_id"][buffer_start_idx], dtype=np.int64)
         torch_data = dict_apply(data, torch.from_numpy)
         return torch_data
